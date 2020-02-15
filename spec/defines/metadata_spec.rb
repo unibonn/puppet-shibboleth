@@ -18,8 +18,8 @@ describe 'shibboleth::metadata', :type => :define do
     let(:title){ 'metadata_name' }
     describe 'with minimum parameters' do
       let(:params){ {
-        :provider_uri => 'http://example.org/provider',
-        :cert_uri     => 'http://example.org/cert.crt'
+        :provider_url => 'http://example.org/provider',
+        :cert_url     => 'http://example.org/cert.crt'
       } }
       it { should contain_class('apache::mod::shib') }
       it { should contain_exec('get_metadata_name_metadata_cert').with(
@@ -35,7 +35,7 @@ describe 'shibboleth::metadata', :type => :define do
         'changes' => [
           'ins MetadataProvider after Errors',
         ],
-        'onlyif'  => 'match MetadataProvider/#attribute/uri size == 0',
+        'onlyif'  => 'match MetadataProvider/#attribute/url size == 0',
         'notify'  => ['Service[httpd]','Service[shibd]'],
         'require' => 'Exec[get_metadata_name_metadata_cert]'
       ) }
@@ -45,7 +45,7 @@ describe 'shibboleth::metadata', :type => :define do
         'context' => '/files/etc/shibboleth/shibboleth2.xml/SPConfig/ApplicationDefaults',
         'changes' => [
           'set MetadataProvider/#attribute/type XML',
-          'set MetadataProvider/#attribute/uri http://example.org/provider',
+          'set MetadataProvider/#attribute/url http://example.org/provider',
           'set MetadataProvider/#attribute/backingFilePath /etc/shibboleth/provider',
           'set MetadataProvider/#attribute/reloadInterval 7200',
           'set MetadataProvider/MetadataFilter[1]/#attribute/type RequireValidUntil',
@@ -59,8 +59,8 @@ describe 'shibboleth::metadata', :type => :define do
     end
     describe 'with all parameters' do
       let(:params){ {
-        :provider_uri => 'http://example.org/provider',
-        :cert_uri     => 'http://example.org/cert.crt',
+        :provider_url => 'http://example.org/provider',
+        :cert_url     => 'http://example.org/cert.crt',
         :backing_file_dir         => '/path/to',
         :backing_file_name        => 'bob.xml',
         :cert_dir                 => '/path/to/certs',
@@ -78,7 +78,7 @@ describe 'shibboleth::metadata', :type => :define do
         'context' => '/files/etc/shibboleth/shibboleth2.xml/SPConfig/ApplicationDefaults',
         'changes' => [
           'set MetadataProvider/#attribute/type JSON',
-          'set MetadataProvider/#attribute/uri http://example.org/provider',
+          'set MetadataProvider/#attribute/url http://example.org/provider',
           'set MetadataProvider/#attribute/backingFilePath /path/to/bob.xml',
           'set MetadataProvider/#attribute/reloadInterval 1000',
           'set MetadataProvider/MetadataFilter[1]/#attribute/type RequireValidUntil',
@@ -104,8 +104,8 @@ describe 'shibboleth::metadata', :type => :define do
     let(:title){ 'metadata_name' }
     describe 'with minimum parameters' do
       let(:params){ {
-        :provider_uri => 'http://example.org/provider',
-        :cert_uri     => 'http://example.org/cert.crt'
+        :provider_url => 'http://example.org/provider',
+        :cert_url     => 'http://example.org/cert.crt'
       } }
       it { should contain_class('apache::mod::shib') }
       it { should contain_exec('get_metadata_name_metadata_cert').with(
@@ -121,7 +121,7 @@ describe 'shibboleth::metadata', :type => :define do
         'changes' => [
           'ins MetadataProvider after Errors',
         ],
-        'onlyif'  => 'match MetadataProvider/#attribute/uri size == 0',
+        'onlyif'  => 'match MetadataProvider/#attribute/url size == 0',
         'notify'  => ['Service[httpd]','Service[shibd]'],
         'require' => 'Exec[get_metadata_name_metadata_cert]'
       ) }
@@ -131,7 +131,7 @@ describe 'shibboleth::metadata', :type => :define do
         'context' => '/files/etc/shibboleth/shibboleth2.xml/SPConfig/ApplicationDefaults',
         'changes' => [
           'set MetadataProvider/#attribute/type XML',
-          'set MetadataProvider/#attribute/uri http://example.org/provider',
+          'set MetadataProvider/#attribute/url http://example.org/provider',
           'set MetadataProvider/#attribute/backingFilePath /etc/shibboleth/provider',
           'set MetadataProvider/#attribute/reloadInterval 7200',
           'set MetadataProvider/MetadataFilter[1]/#attribute/type RequireValidUntil',
@@ -145,8 +145,8 @@ describe 'shibboleth::metadata', :type => :define do
     end
     describe 'with all parameters' do
       let(:params){ {
-        :provider_uri => 'http://example.org/provider',
-        :cert_uri     => 'http://example.org/cert.crt',
+        :provider_url => 'http://example.org/provider',
+        :cert_url     => 'http://example.org/cert.crt',
         :backing_file_dir         => '/path/to',
         :backing_file_name        => 'bob.xml',
         :cert_dir                 => '/path/to/certs',
@@ -164,7 +164,7 @@ describe 'shibboleth::metadata', :type => :define do
         'context' => '/files/etc/shibboleth/shibboleth2.xml/SPConfig/ApplicationDefaults',
         'changes' => [
           'set MetadataProvider/#attribute/type JSON',
-          'set MetadataProvider/#attribute/uri http://example.org/provider',
+          'set MetadataProvider/#attribute/url http://example.org/provider',
           'set MetadataProvider/#attribute/backingFilePath /path/to/bob.xml',
           'set MetadataProvider/#attribute/reloadInterval 1000',
           'set MetadataProvider/MetadataFilter[1]/#attribute/type RequireValidUntil',

@@ -19,7 +19,7 @@ describe 'shibboleth::attribute_map', :type => :define do
     end
     let(:title){ 'map_name' }
     describe 'with minimum parameters' do
-      let(:params){ { :map_uri => 'http://example.org/attribute_map.xml' } }
+      let(:params){ { :map_url => 'http://example.org/attribute_map.xml' } }
       it { should contain_exec("get_map_name_attribute_map").with(
         'path'    => ['/usr/bin'],
         'command' => 'wget http://example.org/attribute_map.xml -O /etc/shibboleth/map_name.xml',
@@ -39,7 +39,7 @@ describe 'shibboleth::attribute_map', :type => :define do
     end
     describe 'with all parameters' do
       let(:params){ {
-        :map_uri  => 'http://bob.org/bobs_attribute_map.xml',
+        :map_url  => 'http://bob.org/bobs_attribute_map.xml',
         :map_dir  => '/some/path/to',
         :max_age            => '5'
       } }
@@ -70,7 +70,7 @@ describe 'shibboleth::attribute_map', :type => :define do
     end
     let(:title){ 'map_name' }
     describe 'with minimum parameters' do
-      let(:params){ { :map_uri => 'http://example.org/attribute_map.xml' } }
+      let(:params){ { :map_url => 'http://example.org/attribute_map.xml' } }
       it { should contain_exec("get_map_name_attribute_map").with(
         'path'    => ['/usr/bin'],
         'command' => 'wget http://example.org/attribute_map.xml -O /etc/shibboleth/map_name.xml',
@@ -90,7 +90,7 @@ describe 'shibboleth::attribute_map', :type => :define do
     end
     describe 'with all parameters' do
       let(:params){ {
-        :map_uri  => 'http://bob.org/bobs_attribute_map.xml',
+        :map_url  => 'http://bob.org/bobs_attribute_map.xml',
         :map_dir  => '/some/path/to',
         :max_age            => '5'
       } }

@@ -28,12 +28,12 @@ shibboleth::sso{'federation_directory':
 }
 
 shibboleth::metadata{'federation_metadata':
-  provider_uri  => 'https://example.federation.org/metadata/fed-metadata-signed.xml',
-  cert_uri      => 'http://example.federation.org/metadata/fed-metadata-cert.pem',
+  provider_url  => 'https://example.federation.org/metadata/fed-metadata-signed.xml',
+  cert_url      => 'http://example.federation.org/metadata/fed-metadata-cert.pem',
 }
 
 shibboleth::attribute_map{'federation_attribute_map':
-  map_uri => 'https://example.federation.org/download/attribute-map.xml',
+  map_url => 'https://example.federation.org/download/attribute-map.xml',
 }
 
 include shibboleth::backend_cert
@@ -84,22 +84,22 @@ This snippet sets up a Single Sign On (SSO) service that uses a Directory Servic
 
 ```
 shibboleth::metadata{'federation_metadata':
-  provider_uri  => 'https://example.federation.org/metadata/fed-metadata-signed.xml',
-  cert_uri      => 'http://example.federation.org/metadata/fed-metadata-cert.pem',
+  provider_url  => 'https://example.federation.org/metadata/fed-metadata-signed.xml',
+  cert_url      => 'http://example.federation.org/metadata/fed-metadata-cert.pem',
 }
 ```
 
-Currently `shibboleth::metadata` only supports a single metadata provider, but it is possible to configure Shibboleth to use multiple metadata in a co-federated environment, hence this has been defined as a resource to permit multiple declarations. This resource requires two URIs, one to obtain the Federation metadata XML file, and another to obtain the Federation metadata signing certificate.
+Currently `shibboleth::metadata` only supports a single metadata provider, but it is possible to configure Shibboleth to use multiple metadata in a co-federated environment, hence this has been defined as a resource to permit multiple declarations. This resource requires two URLs, one to obtain the Federation metadata XML file, and another to obtain the Federation metadata signing certificate.
 
 # Updating the Attribute map
 
 ```puppet
 shibboleth::attribute_map{'federation_attribute_map':
-  map_uri => 'https://example.federation.org/download/attribute-map.xml',
+  map_url => 'https://example.federation.org/download/attribute-map.xml',
 }
 ```
 
-This is optional, and will allow `mod_shib` to use a customised attribute map downloaded from the provided URI. By default this is updated every 21 days. The parameter `max_age` can be used to set the number of days between updates.
+This is optional, and will allow `mod_shib` to use a customised attribute map downloaded from the provided URL. By default this is updated every 21 days. The parameter `max_age` can be used to set the number of days between updates.
 
 # Create the Back-end x509 Certificate
 
@@ -157,7 +157,7 @@ The `shibboleth` module provides the following classes and resource definitions:
 
 ### Parameters for `shibboleth::attribute_map`
 
-* `map_uri` Sets the URI for downloading the Attribute map from. There is no default, and this parameter is required.
+* `map_url` Sets the URL for downloading the Attribute map from. There is no default, and this parameter is required.
 * `map_dir` Sets the directory into which the attribute map is downloaded, defaults to `shibboleth::conf_dir`
 * `max_age` Sets the maximum age in days for the Attribute map before downloading and replacing it, defaults to `21` days
 
@@ -171,12 +171,12 @@ The `shibboleth` module provides the following classes and resource definitions:
 
 ### Parameters for `shibboleth::metadata`
 
-* `provider_uri`            Sets URI for the metadata provider, there is no default and this parameter is required.
-* `cert_uri`                  Sets the URI for the metadata signing certificate, there is no default and this parameter is required.
+* `provider_url`            Sets URL for the metadata provider, there is no default and this parameter is required.
+* `cert_url`                  Sets the URL for the metadata signing certificate, there is no default and this parameter is required.
 * `backing_file_dir`          Sets the directory into which the metadata is downloaded into, defaults to `shibboleth::conf_dir`
 * `backing_file_name`         Sets the name of the metadata backing file, by default this is derived from the `provider_uir`
 * `cert_dir`                  Sets the directory into which the certificate is downloaded into
-* `cert_file_name`            Sets the name of the certificate file, by default this is derived from the `cert_uri`
+* `cert_file_name`            Sets the name of the certificate file, by default this is derived from the `cert_url`
 * `provider_type`             Sets the metadata provider type, defaults to 'XML'
 * `provider_reload_interval`  Set's the metadata reload interval in seconds, defaults to "7200"
 * `metadata_filter_max_validity_interval` Sets the maximum interval for reloading the metadata_filter, defaults to "2419200" seconds

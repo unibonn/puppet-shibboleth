@@ -1,7 +1,7 @@
 # parameter setup allows an attribute_map to bedownloaded with one name
 # and saved locally by another.
 define shibboleth::attribute_map(
-  $map_uri,
+  $map_url,
   $map_dir  = $::shibboleth::conf_dir,
   $max_age  = '21'
 ){
@@ -11,7 +11,7 @@ define shibboleth::attribute_map(
   # Download the attribute map, refresh after $max_age days
   exec{"get_${name}_attribute_map":
     path    => ['/usr/bin'],
-    command => "wget ${map_uri} -O ${attribute_map}",
+    command => "wget ${map_url} -O ${attribute_map}",
     unless  => "test `find ${attribute_map} -ctime -${max_age}`",
     notify  => Service['httpd','shibd'],
   }

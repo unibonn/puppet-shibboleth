@@ -8,24 +8,17 @@ define shibboleth::attribute_map(
 
   $attribute_map = "${map_dir}/${name}.xml"
 
-  # Download the attribute map, refresh after $max_age days
-  exec{"get_${name}_attribute_map":
-    path    => ['/usr/bin'],
-    command => "wget ${map_url} -O ${attribute_map}",
-    unless  => "test `find ${attribute_map} -ctime -${max_age}`",
-    notify  => Service['httpd','shibd'],
-  }
-
   # Make sure the shibboleth config is pointing at the attribute map
   augeas{"shib_${name}_attribute_map":
     lens    => 'Xml.lns',
     incl    => $::shibboleth::config_file,
     context => "/files${::shibboleth::config_file}/SPConfig/ApplicationDefaults",
     changes => [
-      "set AttributeExtractor/#attribute/path ${name}.xml",
+      "set AttributeExtractor/#attribute/url ${map_url}",
+      "set AttributeExtractor/#attribute/backingFilePath ${attribute_map}",
+      "set AttributeExtractor/#attribute/maxRefreshDelay ${max_age}",
     ],
     notify  => Service['httpd','shibd'],
-    require => Exec["get_${name}_attribute_map"],
   }
 
 }

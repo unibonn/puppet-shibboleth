@@ -2,8 +2,8 @@
 # and saved locally by another.
 define shibboleth::attribute_map(
   $map_url,
-  $map_dir  = $::shibboleth::cache_dir,
-  $max_age  = '21'
+  $map_dir            = $::shibboleth::cache_dir,
+  $max_refresh_delay  = '86400' # in seconds
 ){
 
   $attribute_map = "${map_dir}/${name}.xml"
@@ -16,7 +16,7 @@ define shibboleth::attribute_map(
     changes => [
       "set AttributeExtractor/#attribute/url ${map_url}",
       "set AttributeExtractor/#attribute/backingFilePath ${attribute_map}",
-      "set AttributeExtractor/#attribute/maxRefreshDelay ${max_age}",
+      "set AttributeExtractor/#attribute/maxRefreshDelay ${max_refresh_delay}",
     ],
     notify  => Service['httpd','shibd'],
   }

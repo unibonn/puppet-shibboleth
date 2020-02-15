@@ -99,7 +99,7 @@ shibboleth::attribute_map{'federation_attribute_map':
 }
 ```
 
-This is optional, and will allow `mod_shib` to use a customised attribute map downloaded from the provided URL. By default this is updated every 21 days. The parameter `max_age` can be used to set the number of days between updates.
+This is optional, and will allow `mod_shib` to use a customised attribute map downloaded from the provided URL. By default this is updated once a day. The parameter `max_refresh_delay` can be used to set the number of seconds between updates.
 
 # Create the Back-end x509 Certificate
 
@@ -157,9 +157,9 @@ The `shibboleth` module provides the following classes and resource definitions:
 
 ### Parameters for `shibboleth::attribute_map`
 
-* `map_url` Sets the URL for downloading the Attribute map from. There is no default, and this parameter is required.
-* `map_dir` Sets the directory into which the attribute map is downloaded, defaults to `shibboleth::conf_dir`
-* `max_age` Sets the maximum age in days for the Attribute map before downloading and replacing it, defaults to `21` days
+* `map_url`           Sets the URL for downloading the Attribute map from. There is no default, and this parameter is required.
+* `map_dir`           Sets the directory into which the attribute map is downloaded, defaults to `shibboleth::conf_dir`
+* `max_refresh_delay` Sets the maximum age in seconds for the attribute map before downloading and replacing it, defaults to `86400` seconds
 
 ## Class: `shibboleth::backend_cert`
 

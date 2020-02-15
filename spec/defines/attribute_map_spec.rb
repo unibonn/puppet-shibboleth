@@ -41,7 +41,7 @@ describe 'shibboleth::attribute_map', :type => :define do
       let(:params){ {
         :map_url  => 'http://bob.org/bobs_attribute_map.xml',
         :map_dir  => '/some/path/to',
-        :max_age            => '5'
+        :max_refresh_delay            => '3600'
       } }
       it { should contain_exec("get_map_name_attribute_map").with(
         'command' => 'wget http://bob.org/bobs_attribute_map.xml -O /some/path/to/map_name.xml',
@@ -92,7 +92,7 @@ describe 'shibboleth::attribute_map', :type => :define do
       let(:params){ {
         :map_url  => 'http://bob.org/bobs_attribute_map.xml',
         :map_dir  => '/some/path/to',
-        :max_age            => '5'
+        :max_refresh_delay            => '3600'
       } }
       it { should contain_exec("get_map_name_attribute_map").with(
         'command' => 'wget http://bob.org/bobs_attribute_map.xml -O /some/path/to/map_name.xml',

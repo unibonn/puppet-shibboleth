@@ -20,6 +20,7 @@ class shibboleth::params {
   $style_sheet        = '/shibboleth-sp/main.css'
   $conf_dir           = '/etc/shibboleth'
   $conf_file          = 'shibboleth2.xml'
+  $cache_dir          = '/var/cache/shibboleth'
   $sp_cert            = 'sp-cert.pem'
   $bin_dir            = '/usr/sbin'
   $discovery_protocol = 'SAMLDS'

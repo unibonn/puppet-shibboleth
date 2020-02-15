@@ -21,6 +21,7 @@ class shibboleth (
   $style_sheet        = $::shibboleth::params::style_sheet,
   $conf_dir           = $::shibboleth::params::conf_dir,
   $conf_file          = $::shibboleth::params::conf_file,
+  $cache_dir          = $::shibboleth::params::cache_dir,
   $sp_cert            = $::shibboleth::params::sp_cert,
   $bin_dir            = $::shibboleth::params::bin_dir,
   $handlerSSL         = true,
@@ -52,6 +53,14 @@ class shibboleth (
     path    => $config_file,
     replace => false,
     require => [Class['apache::mod::shib'],File['shibboleth_conf_dir']],
+  }
+
+  file{'shibboleth_cache_dir':
+    ensure  => 'directory',
+    path    => $cache_dir,
+    owner   => $user,
+    group   => $group,
+    require => Class['apache::mod::shib'],
   }
 
 # Using augeas is a performance hit, but it works. Fix later.

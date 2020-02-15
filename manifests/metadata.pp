@@ -3,7 +3,7 @@
 define shibboleth::metadata(
   $provider_url,
   $cert_url,
-  $backing_file_dir         = $::shibboleth::conf_dir,
+  $backing_file_dir         = $::shibboleth::cache_dir,
   $backing_file_name        = $provider_url.split('/')[-1],
   $cert_dir                 = $::shibboleth::conf_dir,
   $cert_file_name           = $cert_url.split('/')[-1],

@@ -2,7 +2,7 @@
 # and saved locally by another.
 define shibboleth::attribute_map(
   $map_url,
-  $map_dir  = $::shibboleth::conf_dir,
+  $map_dir  = $::shibboleth::cache_dir,
   $max_age  = '21'
 ){
 

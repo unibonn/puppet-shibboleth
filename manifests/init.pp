@@ -42,8 +42,8 @@ class shibboleth (
   file{'shibboleth_conf_dir':
     ensure  => 'directory',
     path    => $conf_dir,
-    owner   => $user,
-    group   => $group,
+    owner   => 'root',
+    group   => 'root',
     recurse => true,
     require => Class['apache::mod::shib'],
   }

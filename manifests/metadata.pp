@@ -16,11 +16,17 @@ define shibboleth::metadata(
   $cert_file    = "${cert_dir}/${cert_file_name}"
 
   # Get the Metadata signing certificate
-  exec{"get_${name}_metadata_cert":
-    path    => ['/usr/bin'],
-    command => "wget ${cert_url} -O ${cert_file}",
-    creates => $cert_file,
-    notify  => Service['httpd','shibd'],
+  file { $cert_file:
+    ensure   => present,
+    source   => $cert_url,
+    path     => $conf_dir,
+    owner    => 'root',
+    group    => 'root',
+    seluser  => 'system_u',
+    selrole  => 'object_r',
+    seltype  => 'cert_t',
+    selrange => 's0',
+    notify   => Service['httpd','shibd'],
   }
 
   # This puts the MetadataProvider entry in the 'right' place
@@ -33,7 +39,7 @@ define shibboleth::metadata(
     ],
     onlyif  => 'match MetadataProvider/#attribute/url size == 0',
     notify  => Service['httpd','shibd'],
-    require => Exec["get_${name}_metadata_cert"],
+    require => File[$cert_file],
   }
 
   # This will update the attributes and child nodes if they change
@@ -52,7 +58,7 @@ define shibboleth::metadata(
       "set MetadataProvider/MetadataFilter[2]/#attribute/certificate ${cert_file}",
     ],
     notify  => Service['httpd','shibd'],
-    require => [Exec["get_${name}_metadata_cert"],Augeas["shib_${name}_create_metadata_provider"]],
+    require => [File[$cert_file],Augeas["shib_${name}_create_metadata_provider"]],
   }
 
 }

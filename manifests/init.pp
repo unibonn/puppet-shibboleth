@@ -45,6 +45,7 @@ class shibboleth (
     owner   => 'root',
     group   => 'root',
     recurse => true,
+    purge   => true,
     require => Class['apache::mod::shib'],
   }
 

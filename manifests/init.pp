@@ -64,6 +64,17 @@ class shibboleth (
     require => Class['apache::mod::shib'],
   }
 
+  # Prevent these files from being purged
+  file { ["${conf_dir}/protocols.xml", "${conf_dir}/security-policy.xml"]:
+    ensure   => present,
+    owner    => 'root',
+    group    => 'root',
+    seluser  => 'system_u',
+    selrole  => 'object_r',
+    seltype  => 'etc_t',
+    selrange => 's0',
+  }
+
 # Using augeas is a performance hit, but it works. Fix later.
   augeas{'sp_config_resources':
     lens    => 'Xml.lns',

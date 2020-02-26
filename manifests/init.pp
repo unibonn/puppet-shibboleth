@@ -119,6 +119,16 @@ class shibboleth (
     notify  => Service['httpd','shibd'],
   }
 
+  augeas{'sp_config_metadata':
+    lens    => 'Xml.lns',
+    incl    => $config_file,
+    context => "/files${config_file}",
+    changes => [
+      'set SPConfig/#attribute/xmlns:md urn:oasis:names:tc:SAML:2.0:metadata',
+    ],
+    notify  => Service['httpd','shibd'],
+  }
+
   service{'shibd':
     ensure     => 'running',
     enable     => true,

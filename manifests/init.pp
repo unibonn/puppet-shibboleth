@@ -65,7 +65,10 @@ class shibboleth (
   }
 
   # Prevent these files from being purged
-  file { ["${conf_dir}/protocols.xml", "${conf_dir}/security-policy.xml"]:
+  file { ["${conf_dir}/protocols.xml",
+          "${conf_dir}/security-policy.xml",
+          "${conf_dir}/attribute-policy.xml",
+          "${conf_dir}/shibd.logger"]:
     ensure   => present,
     owner    => 'root',
     group    => 'root',

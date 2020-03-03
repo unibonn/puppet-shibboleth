@@ -25,6 +25,7 @@ class shibboleth (
   $sp_cert            = $::shibboleth::params::sp_cert,
   $bin_dir            = $::shibboleth::params::bin_dir,
   $handlerSSL         = true,
+  $cookieProps        = undef,
   $consistent_address = true
 ) inherits shibboleth::params {
 
@@ -118,6 +119,26 @@ class shibboleth (
     context => "/files${config_file}/SPConfig/ApplicationDefaults",
     changes => [
       "set Sessions/#attribute/handlerSSL ${handlerSSL}",
+    ],
+    notify  => Service['httpd','shibd'],
+  }
+
+  # If cookieProps is undef,
+  # default cookieProps to https if handlerSSL = true, http otherwise.
+  if $cookieProps == undef {
+    $_cookieProps = $handlerSSL ? {
+      true    => 'https',
+      default => 'http',
+    }
+  } else {
+    $_cookieProps = $cookieProps
+  }
+  augeas{'sp_config_cookieProps':
+    lens    => 'Xml.lns',
+    incl    => $config_file,
+    context => "/files${config_file}/SPConfig/ApplicationDefaults",
+    changes => [
+      "set Sessions/#attribute/cookieProps ${_cookieProps}",
     ],
     notify  => Service['httpd','shibd'],
   }

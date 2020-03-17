@@ -69,7 +69,10 @@ class shibboleth (
   file { ["${conf_dir}/protocols.xml",
           "${conf_dir}/security-policy.xml",
           "${conf_dir}/attribute-policy.xml",
-          "${conf_dir}/shibd.logger"]:
+          "${conf_dir}/shibd.logger",
+          "${conf_dir}/metadataError.html",
+          "${conf_dir}/sessionError.html",
+          "${conf_dir}/sslError.html"]:
     ensure   => present,
     owner    => 'root',
     group    => 'root',

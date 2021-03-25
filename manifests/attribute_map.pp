@@ -19,6 +19,7 @@ define shibboleth::attribute_map(
       "set AttributeExtractor/#attribute/maxRefreshDelay ${max_refresh_delay}",
     ],
     notify  => Service['httpd','shibd'],
+    require => File[$::shibboleth::config_file],
   }
 
 }

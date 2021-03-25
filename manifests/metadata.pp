@@ -39,7 +39,7 @@ define shibboleth::metadata(
     ],
     onlyif  => 'match MetadataProvider/#attribute/url size == 0',
     notify  => Service['httpd','shibd'],
-    require => File[$cert_file],
+    require => [File[$cert_file],File[$::shibboleth::config_file]],
   }
 
   # This will update the attributes and child nodes if they change
@@ -58,7 +58,7 @@ define shibboleth::metadata(
       "set MetadataProvider/MetadataFilter[2]/#attribute/certificate ${cert_file}",
     ],
     notify  => Service['httpd','shibd'],
-    require => [File[$cert_file],Augeas["shib_${name}_create_metadata_provider"]],
+    require => [File[$cert_file],Augeas["shib_${name}_create_metadata_provider"],File[$::shibboleth::config_file]],
   }
 
 }

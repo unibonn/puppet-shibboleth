@@ -93,6 +93,7 @@ class shibboleth (
       "set Errors/#attribute/styleSheet ${style_sheet}",
     ],
     notify  => Service['httpd','shibd'],
+    require => File['shibboleth_config_file'],
   }
 
   augeas{'sp_config_consistent_address':
@@ -103,6 +104,7 @@ class shibboleth (
       "set Sessions/#attribute/consistentAddress ${consistent_address}",
     ],
     notify  => Service['httpd','shibd'],
+    require => File['shibboleth_config_file'],
   }
 
   augeas{'sp_config_hostname':
@@ -114,6 +116,7 @@ class shibboleth (
       "set Sessions/#attribute/handlerURL https://${hostname}/Shibboleth.sso",
     ],
     notify  => Service['httpd','shibd'],
+    require => File['shibboleth_config_file'],
   }
 
   augeas{'sp_config_handlerSSL':
@@ -124,6 +127,7 @@ class shibboleth (
       "set Sessions/#attribute/handlerSSL ${handlerSSL}",
     ],
     notify  => Service['httpd','shibd'],
+    require => File['shibboleth_config_file'],
   }
 
   # If cookieProps is undef,
@@ -144,6 +148,7 @@ class shibboleth (
       "set Sessions/#attribute/cookieProps ${_cookieProps}",
     ],
     notify  => Service['httpd','shibd'],
+    require => File['shibboleth_config_file'],
   }
 
   augeas{'sp_config_metadata':
@@ -154,6 +159,7 @@ class shibboleth (
       'set SPConfig/#attribute/xmlns:md urn:oasis:names:tc:SAML:2.0:metadata',
     ],
     notify  => Service['httpd','shibd'],
+    require => File['shibboleth_config_file'],
   }
 
   service{'shibd':

@@ -41,6 +41,7 @@ define shibboleth::sso (
         "set SSO/#attribute/ECP ${ecp_support}",
       ],
       notify  => Service['httpd','shibd'],
+      require => File[$::shibboleth::config_file],
     }
   }
 }
